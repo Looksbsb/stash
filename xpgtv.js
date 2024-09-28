@@ -17,13 +17,18 @@ const str = `||||DC6FFCB55FA||861824127032820||12702720||Asus/Asus/ASUS_I003DD:7
 // 使用外部 API 生成 hash
 const hashUrl = `https://api.hashify.net/hash/md5/hex?value=${encodeURIComponent(str)}`;
 
+console.log('Request URL:', url);
+console.log('Hash URL:', hashUrl);
+
 $httpClient.get(hashUrl, function(error, response, data) {
     if (error) {
         console.log('Error:', error);
         $done({});
     } else {
+        console.log('Response Data:', data);
         const hash = JSON.parse(data).Digest.toLowerCase().substring(8, 12);
         headers.hash = hash;
+        console.log('Generated Hash:', hash);
         $done({url: url, headers: headers});
     }
 });
